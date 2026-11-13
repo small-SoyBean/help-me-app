@@ -1,9 +1,9 @@
 ﻿import { AudioLines, Camera, PersonStanding } from "lucide-react";
 
-export type Tab = "map" | "voice" | "camera";
+export type Tab = "body" | "voice" | "camera";
 
 const TABS = {
-    map: { label: "Body Map", Icon: PersonStanding },
+    body: { label: "Body", Icon: PersonStanding },
     voice: { label: "Talk", Icon: AudioLines },
     camera: { label: "Camera", Icon: Camera },
 } as const;
@@ -31,7 +31,7 @@ export function BottomBarButtons({ activeTab, onSelectTab, thisTab }: Props) {
             <span className="w-[30%] flex items-center justify-center">
                 <Icon/>
             </span>
-            <span className="w-[70%] text-center">
+            <span className="w-[70%] flex text-center justify-center">
                 {label}
             </span>
         </button>

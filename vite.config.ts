@@ -13,8 +13,8 @@ export default defineConfig({
         enabled: false // Allows you to test the PWA in localhost
       },
       manifest: {
-        name: 'FieldOps Medical Guide',
-        short_name: 'FieldOps',
+        name: 'HelpMe - Medical Guide',
+        short_name: 'HelpMe',
         description: 'Offline first-aid and medical triage',
         theme_color: '#ffffff',
         icons: [
