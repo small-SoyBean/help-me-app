@@ -1,5 +1,4 @@
-﻿//import './lib/firebase';
-import {BottomBar} from './components/BottomBar.tsx'
+﻿import {BottomBar} from './components/BottomBar.tsx'
 import Map from './components/Map'
 import {useState} from 'react';
 

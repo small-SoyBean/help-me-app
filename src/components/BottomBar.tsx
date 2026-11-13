@@ -7,11 +7,11 @@ interface BottomBarProps {
 
 export function BottomBar({activeTab, onSelectTab}: BottomBarProps): JSX.Element {
     return (
-        <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-slate-900 p-3 text-white rounded-t-2xl">
+        <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-slate-300 p-3 text-white rounded-t-2xl">
             <button
                 onClick={() => onSelectTab("map")}
                 className={`rounded-lg px-4 py-2 font-semibold ${
-                    activeTab === "map" ? "bg-red-600" : "bg-slate-800"
+                    activeTab === "map" ? "bg-blue-700 text-white border-2 border-blue-950 font-bold" : "bg-white text-slate-900 border-2 border-slate-400"
                 }`}
             >
                 Body Map
@@ -20,7 +20,7 @@ export function BottomBar({activeTab, onSelectTab}: BottomBarProps): JSX.Element
             <button
                 onClick={() => onSelectTab("voice")}
                 className={`rounded-lg px-4 py-2 font-semibold ${
-                    activeTab === "voice" ? "bg-red-600" : "bg-slate-800"
+                    activeTab === "voice" ? "bg-blue-700 text-white border-2 border-blue-950 font-bold" : "bg-white text-slate-900 border-2 border-slate-400"
                 }`}
             >
                 Voice Triage
@@ -29,7 +29,7 @@ export function BottomBar({activeTab, onSelectTab}: BottomBarProps): JSX.Element
             <button
                 onClick={() => onSelectTab("camera")}
                 className={`rounded-lg px-4 py-2 font-semibold ${
-                    activeTab === "camera" ? "bg-red-600" : "bg-slate-800"
+                    activeTab === "camera" ? "bg-blue-700 text-white border-2 border-blue-950 font-bold" : "bg-white text-slate-900 border-2 border-slate-400"
                 }`}
             >
                 Camera

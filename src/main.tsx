@@ -1,6 +1,6 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-//import './lib/firebase.ts'
+import './lib/firebase.ts'
 import {App} from './App.tsx'
 import {registerSW} from 'virtual:pwa-register'
 import './index.css'

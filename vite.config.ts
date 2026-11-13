@@ -10,7 +10,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true // Allows you to test the PWA in localhost
+        enabled: false // Allows you to test the PWA in localhost
       },
       manifest: {
         name: 'FieldOps Medical Guide',
