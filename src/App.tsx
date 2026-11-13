@@ -9,6 +9,10 @@ function App() {
           title="11/12/2026"
           description="Initial build. Woo hoo!"
       />
+        <TestComponent
+            title = "Teaching moment :)"
+            description="gerba"
+        />
     </>
   );
 }
