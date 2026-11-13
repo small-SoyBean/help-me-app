@@ -1,7 +1,9 @@
-﻿export function App() {
+﻿import './firebase';
+
+export function App() {
     return (
         <>
-            <p>Hello</p>
+            <p className="font-medium text-gray-500">Tailwind Test</p>
         </>
     );
 }
