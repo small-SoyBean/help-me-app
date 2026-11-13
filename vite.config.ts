@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   plugins: [
     react(),
-      tailwindcss(),
+    tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
