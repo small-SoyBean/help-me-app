@@ -42,7 +42,7 @@ export function GodotViewer() {
                 ref={iframeRef}
                 src="/godot/help_me.html"
                 title="Godot Interactive View"
-                className="w-full h-[500px] border-0 rounded-lg"
+                className="w-full h-125 border-0"
             />
             <button
                 onClick={() => sendToGodot({ type: 'TEST_MSG', payload: { part: 'heart' } })}

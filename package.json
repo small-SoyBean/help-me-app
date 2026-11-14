@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open",
+    "prebuild": "node -e \"import { existsSync } from 'node:fs'; if (!existsSync('public/godot/help_me.html')) { console.error('Missing public/godot/help_me.html. Export the Godot project first.'); process.exit(1); }\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

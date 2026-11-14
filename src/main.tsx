@@ -5,11 +5,14 @@ import {App} from './App.tsx'
 import {registerSW} from 'virtual:pwa-register'
 import './index.css'
 
-// Register the service worker for offline caching
 registerSW({immediate: true})
 
-createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <App/>
-    </StrictMode>,
-);
+if (window.self !== window.top) {
+    document.body.textContent = 'Error: App loaded inside iframe instead of /godot/help_me.html';
+} else {
+    createRoot(document.getElementById('root')!).render(
+        <StrictMode>
+            <App/>
+        </StrictMode>,
+    );
+}

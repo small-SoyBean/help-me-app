@@ -12,6 +12,11 @@ export default defineConfig({
       devOptions: {
         enabled: false // Allows you to test the PWA in localhost
       },
+      workbox: {
+        navigateFallbackDenylist: [/^\/godot\//],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm,pck}'],
+        maximumFileSizeToCacheInBytes: 64 * 1024 * 1024
+      },
       manifest: {
         name: 'HelpMe - Medical Guide',
         short_name: 'HelpMe',
