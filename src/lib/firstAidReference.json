@@ -1,4 +1,5 @@
 {
-  "Deep Laceration": "Apply direct pressure with a clean cloth. If bleeding bleeds through, add more cloth on top, do not remove the base layer. Elevate the limb above the heart. Do not use a tourniquet unless bleeding is life-threatening and cannot be controlled with pressure.",
-  "Sprain": "Follow RICE: Rest, Ice, Compression, Elevation. Immobilize the joint. Do not apply heat for the first 48 hours."
+  "Left Arm, Laceration": "Apply direct pressure to the left arm with a sterile dressing. Elevate the arm above the heart. Do not use a tourniquet unless bleeding is severe.",
+  "Head, Burn": "Cool the burn immediately with cool running water. Do not apply pressure to the head. Cover loosely.",
+  "Right Leg, Sprain": "Follow RICE for the right leg. Rest, apply ice, compress with an elastic bandage, and elevate."
 }
