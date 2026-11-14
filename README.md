@@ -11,7 +11,7 @@
 This repository is under active development for the #BuildHybridAI 2026 hackathon. Currently, each of the three input tabs operates as an independent method of getting medical guidance, with combined multi-modal triage across tabs planned as a future enhancement.
 
 ### Implemented
-- **Application Shell & Navigation:** React 19 + TypeScript + Tailwind CSS v4 layout with bottom-bar navigation (`Body Map`, `Talk`, `Camera`).
+- **Application Shell & Navigation:** React 19 + TypeScript + Tailwind CSS v4 layout with bottom-bar navigation (`Body`, `Talk`, `Camera`).
 - **PWA Configuration:** Service worker registration (`autoUpdate`) and web manifest configured via `vite-plugin-pwa`.
 - **Hybrid AI & Offline Backend Setup (`src/lib/firebase.ts`):**
   - Firebase AI Logic configured with `GoogleAIBackend` and `InferenceMode.PREFER_ON_DEVICE` (`getHybridModel()`) to prioritize Chrome on-device Gemini Nano inference with automatic cloud fallback.
@@ -19,7 +19,7 @@ This repository is under active development for the #BuildHybridAI 2026 hackatho
   - Firebase App Check initialized with `ReCaptchaEnterpriseProvider` and local development debug token support.
 
 ### In Progress
-- **Interactive Human Anatomy Map (`src/components/Map.tsx`):** Replacing the current placeholder view with an interactive body map for clicking and labeling affected areas to request guidance.
+- **Interactive Human Anatomy Map (`src/components/Map.tsx`):** Replacing the current placeholder view with an interactive body map built in Godot for clicking and labeling affected areas to request guidance.
 - **Voice (STT) & Text Input View:** Implementing speech-to-text and text entry as a standalone method for describing symptoms.
 - **Camera Capture View:** Integrating device camera access as a standalone method for visual symptom/injury assessment.
 - **Hybrid AI Triage Integration:** Connecting each input method to `getHybridModel()` for independent triage responses and caching results in Firestore.
@@ -29,7 +29,7 @@ This repository is under active development for the #BuildHybridAI 2026 hackatho
 
 ## Tech Stack
 
-- **Frontend:** React 19, TypeScript 6, Tailwind CSS v4, Lucide React
+- **Frontend:** React 19, TypeScript 6, Godot 4.7.2, Tailwind CSS v4, Lucide React
 - **Build & PWA:** Vite 8, `vite-plugin-pwa`
 - **AI & Backend:** Firebase v13 (`firebase/ai` Hybrid Inference, Cloud Firestore with offline persistence, Firebase App Check)
 
@@ -39,6 +39,7 @@ This repository is under active development for the #BuildHybridAI 2026 hackatho
 
 ### Prerequisites
 - **Node.js** (v20+ recommended) and **npm**
+- **Godot v4.7.2**
 - A **Firebase project** with Firebase AI Logic, Firestore, and App Check enabled
 - For on-device inference: a supported desktop browser with Chrome's Built-in AI (Prompt API / Gemini Nano) enabled; otherwise, Firebase AI automatically falls back to cloud inference.
 
@@ -62,14 +63,18 @@ VITE_FIREBASE_APP_ID=your_app_id
 VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 VITE_RECAPTCHA_SITE_KEY=your_recaptcha_enterprise_site_key
 ```
+### 3. Export the Godot Project
+Open the Godot project in ```Godot/``` with **Godot 4.7.2** and export the project.
 
-### 3. Run the Development Server
+```Project -> Export -> Export Project (Uncheck 'Export With Debug')```
+
+### 4. Run the Development Server
 
 ```bash
 npm run dev
 ```
 
-### 4. Build for Production
+### 5. Build for Production
 
 ```bash
 npm run build
@@ -81,7 +86,7 @@ npm run preview
 ## Repository Structure
 
 ```text
-├── public/                 # Static assets and icons
+├── public/                 # Static assets, icons, and the Godot project
 ├── src/
 │   ├── assets/             # Bundled static assets
 │   ├── components/
@@ -102,9 +107,9 @@ npm run preview
 
 ## Team
 
-- **[Team Member 1](https://github.com/username)** — Role / Focus
-- **[Team Member 2](https://github.com/username)** — Role / Focus
-- **[Team Member 3](https://github.com/username)** — Role / Focus
+- **[Alex Kyer](https://github.com/small-SoyBean)** — Programmer and PM
+- **[Andrew Bolling](https://github.com/Andrew9541)** — Programmer
+- **[Jack Thompson](https://github.com/jackhthompson1101)** — Programmer
 
 ---
 
