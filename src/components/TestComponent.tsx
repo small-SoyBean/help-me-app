@@ -10,16 +10,30 @@ export default function PromptTest() {
         if (!prompt.trim()) return;
         setLoading(true);
         setResponse("");
+        //Creates a non-streamed response (keep in case we don't want to stream)
+        //try {
+            //const aiText = await generateAIResponse(prompt);
+            //setResponse(aiText);
+        //} catch (error) {
+            //console.error(error);
+            //setResponse("Error generating response. Check the console.");
+        //} finally {
+            //setLoading(false);
+        //}
 
         try {
-            const aiText = await generateAIResponse(prompt);
-            setResponse(aiText);
+            // Pass a callback that updates the state every time a new chunk arrives
+            await generateAIResponse(prompt, (currentText) => {
+                setResponse(currentText);
+            });
         } catch (error) {
             console.error(error);
             setResponse("Error generating response. Check the console.");
         } finally {
             setLoading(false);
         }
+
+
     };
 
     return (

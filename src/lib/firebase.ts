@@ -58,16 +58,26 @@ export function getHybridModel() {
 }
 
 //Function to generate a text response
-export async function generateAIResponse(prompt: string) {
+export async function generateAIResponse(prompt: string, onUpdate: (text: string) => void) {
     try {
         const model = getHybridModel();
 
         await model.initializeDeviceModel((val) =>
             console.log(`Download progress: ${Math.round(val*10000) / 100}%`)
         );
+//Old non-streamed output
+        //const result = await model.generateContent(prompt);
+        //return result.response.text();
 
-        const result = await model.generateContent(prompt);
-        return result.response.text();
+        const result = await model.generateContentStream(prompt);
+
+        let fullText = "";
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            fullText += chunkText;
+            onUpdate(fullText)
+        }
+        return fullText;
     } catch (error) {
         console.error("Error generating response:", error);
         throw error;
