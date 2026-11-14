@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
-import { getAI, getGenerativeModel, GoogleAIBackend, InferenceMode } from "firebase/ai";
+import { getAI, getGenerativeModel, getLiveGenerativeModel, type AudioConversationController, startAudioConversation, GoogleAIBackend, InferenceMode, ResponseModality } from "firebase/ai";
 import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
 
 // Properly type the debug token on globalThis so TypeScript/ESLint never complain
@@ -51,16 +51,30 @@ export const db = initializeFirestore(app, {
 export const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 // Call this inside your click/triage handler (required by Chrome's on-device Prompt API)
-export function getHybridModel() {
-    return getGenerativeModel(ai, {
-        mode: InferenceMode.PREFER_ON_DEVICE,
-    });
+export function getHybridModel(online: boolean, tts: boolean) {
+    if (online) {
+        if (tts) {
+            return getGenerativeModel(ai, {
+                model: "gemini-3.8-flash-tts",
+                generationConfig: {
+                    responseModalities: [ResponseModality.AUDIO],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Kore" },
+                        },
+                    },
+                },
+            });
+        }
+        return getGenerativeModel(ai, {model: "gemini-4-hydrogen"});
+    }
+    return getGenerativeModel(ai, {model: InferenceMode.PREFER_ON_DEVICE});
 }
 
 //Function to generate a text response
 export async function generateAIResponse(prompt: string, onUpdate: (text: string) => void) {
     try {
-        const model = getHybridModel();
+        const model = getHybridModel(true, false);
 
         await model.initializeDeviceModel((val) =>
             console.log(`Download progress: ${Math.round(val*10000) / 100}%`)
@@ -82,4 +96,24 @@ export async function generateAIResponse(prompt: string, onUpdate: (text: string
         console.error("Error generating response:", error);
         throw error;
     }
+}
+
+
+// Live ai stuff
+
+let conversationController: AudioConversationController;
+
+export async function talkToMe(){
+    const liveModel = getLiveGenerativeModel(ai, {
+        model: "gemini-3.1-flash-live-preview",
+        generationConfig: {
+            responseModalities: [ResponseModality.AUDIO]
+        },
+    });
+    const session = await liveModel.connect();
+    conversationController = await startAudioConversation(session);
+}
+
+export async function stopTalkToMe(){
+    await conversationController.stop()
 }
