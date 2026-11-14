@@ -1,5 +1,6 @@
 import {BottomBar} from './components/BottomBar.tsx'
 import Map from './components/Map'
+import TestComponent from './components/TestComponent.tsx';
 import {useState} from 'react';
 
 export function App() {
@@ -9,7 +10,7 @@ export function App() {
             <title>HelpMe - Medical Guide</title>
             <BottomBar activeTab={activeTab} onSelectTab={setActiveTab}/>
             {activeTab === "body" && <Map></Map>}
-            {activeTab === "voice" && <p className="align-middle text-red-500">Voice</p>}
+            {activeTab === "voice" && <p className="align-middle text-red-500">Voice</p> && <TestComponent></TestComponent>}
             {activeTab === "camera" && <p className="align-middle text-red-500">Camera</p>}
         </>
     );
