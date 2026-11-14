@@ -1,15 +1,48 @@
-﻿import type {JSX} from "react";
+﻿import {useState } from 'react';
+import { generateAIResponse } from '../lib/firebase';
 
-interface TestComponentProps {
-    title: string;
-    description: string;
-}
+export default function PromptTest() {
+    const [prompt, setPrompt] = useState("");
+    const [response, setResponse] = useState("");
+    const [loading, setLoading] = useState(false);
 
-export function TestComponent({ title, description }: TestComponentProps): JSX.Element {
+    const handleTest = async () => {
+        if (!prompt.trim()) return;
+        setLoading(true);
+        setResponse("");
+
+        try {
+            const aiText = await generateAIResponse(prompt);
+            setResponse(aiText);
+        } catch (error) {
+            console.error(error);
+            setResponse("Error generating response. Check the console.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="test-component">
-            <h2>{title}</h2>
-            <p>{description}</p>
+        <div className="flex flex-col gap-4 p-6 m-4 bg-white rounded-lg shadow-md w-full max-w-md text-black">
+            <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="TEST PROMPT"
+                className="w-full p-3 border border-gray-300 rounded-md min-h-[100px]"
+            />
+            <button
+                onClick={handleTest}
+                disabled={loading}
+                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+            >
+                {loading ? "Generating..." : "Send Prompt"}
+            </button>
+
+            {response && (
+                <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-md whitespace-pre-wrap">
+                    {response}
+                </div>
+            )}
         </div>
     );
 }

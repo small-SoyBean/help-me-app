@@ -56,3 +56,20 @@ export function getHybridModel() {
         mode: InferenceMode.PREFER_ON_DEVICE,
     });
 }
+
+//Function to generate a text response
+export async function generateAIResponse(prompt: string) {
+    try {
+        const model = getHybridModel();
+
+        await model.initializeDeviceModel((val) =>
+            console.log(`Download progress: ${Math.round(val*10000) / 100}%`)
+        );
+
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+    } catch (error) {
+        console.error("Error generating response:", error);
+        throw error;
+    }
+}
