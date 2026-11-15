@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
 [ext_resource type="Script" uid="uid://dip7g63eww4nu" path="res://scenes/main.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://6chsansipsym" path="res://scenes/body_map.gd" id="2_tipki"]
+[ext_resource type="Texture2D" uid="uid://j8cdmqhy75qm" path="res://leftleg-bodymap.png" id="3_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://mq5rc212r4a1" path="res://head-bodymap.png" id="3_sugp2"]
+[ext_resource type="Texture2D" uid="uid://do16y0r4t3hc8" path="res://rightleg-bodymap.png" id="4_tipki"]
+[ext_resource type="Texture2D" uid="uid://b6erxnvma360u" path="res://torso-bodymap.png" id="5_85g3d"]
+[ext_resource type="Texture2D" uid="uid://rql0b4kyib6u" path="res://leftarm-bodymap.png" id="6_choun"]
+[ext_resource type="Texture2D" uid="uid://bpuw0he2qdbkg" path="res://rightarm-bodymap.png" id="7_ya4ey"]
 
 [node name="Main" type="Control" unique_id=2054655475]
 layout_mode = 3
@@ -10,6 +17,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o5qli")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=700273787]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8273134, 0.8848549, 0.95448464, 1)
 
 [node name="Label" type="Label" parent="." unique_id=1788597490]
 layout_mode = 1
@@ -24,6 +40,80 @@ offset_right = 33.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Nothing."
+text = "peekabo."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="body_map" type="Control" parent="." unique_id=606171947]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = -4.0
+offset_right = 414.0
+offset_bottom = 331.0
+script = ExtResource("2_tipki")
+
+[node name="head_crop" type="TextureButton" parent="body_map" unique_id=1169138861]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_sugp2")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="left_leg_crop" type="TextureButton" parent="body_map" unique_id=1181842838]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_o6xl0")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="right_leg_crop" type="TextureButton" parent="body_map" unique_id=465429816]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_tipki")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="torso" type="TextureButton" parent="body_map" unique_id=504633444]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_85g3d")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="left_arm_crop" type="TextureButton" parent="body_map" unique_id=1783732346]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_choun")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="right_arm_crop" type="TextureButton" parent="body_map" unique_id=920914459]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("7_ya4ey")
+ignore_texture_size = true
+stretch_mode = 5
