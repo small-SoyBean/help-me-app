@@ -1,5 +1,6 @@
 ﻿import {useState } from 'react';
-import { generateAIResponse } from '../lib/firebase';
+import { generateAIResponse, talkToMe } from '../lib/firebase';
+import {speakText} from "../lib/tts.ts";
 
 export default function PromptTest() {
     const [prompt, setPrompt] = useState("");
@@ -37,12 +38,12 @@ export default function PromptTest() {
     };
 
     return (
-        <div className="flex flex-col gap-4 p-6 m-4 bg-white rounded-lg shadow-md w-full max-w-md text-black">
+        <div className="flex flex-col gap-4 p-6 m-4 bg-white rounded-lg shadow-md justify-center">
             <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="TEST PROMPT"
-                className="w-full p-3 border border-gray-300 rounded-md min-h-[100px]"
+                className="w-full p-3 border border-gray-300 rounded-md min-h-25"
             />
             <button
                 onClick={handleTest}
@@ -50,6 +51,22 @@ export default function PromptTest() {
                 className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
             >
                 {loading ? "Generating..." : "Send Prompt"}
+            </button>
+
+            <button
+                onClick={() => speakText(response)}
+                disabled={loading}
+                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+            >
+                Speak
+            </button>
+
+            <button
+                onClick={() => talkToMe()}
+                disabled={loading}
+                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+            >
+                Talk To Me (Live voice)
             </button>
 
             {response && (

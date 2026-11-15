@@ -1,6 +1,6 @@
 import {BottomBar} from './components/BottomBar.tsx'
-import Map from './components/Map'
-import TestComponent from './components/TestComponent.tsx';
+import Body from './components/Body'
+import Voice from './components/Voice'
 import {useState} from 'react';
 import {TopBar} from "./components/TopBar.tsx";
 
@@ -20,21 +20,22 @@ export function App() {
     };
 
     return (
-        <>
+        <div className={"flex flex-col h-dvh overflow-hidden"}>
             <title>HelpMe - Medical Guide</title>
-            <TopBar activeTab={activeTab} onSelectTab={handleSelectTab} />
+            <TopBar />
+            <main className="flex-1 overflow-hidden">
+                {hasLoadedGodot && (
+                    <div className={activeTab === "body" ? "h-full block" : "hidden"}>
+                        <Body />
+                    </div>
+                )}
+                {hasLoadedTextAI && (
+                    <div className={activeTab === "voice" ? "h-full block" : "hidden"}>
+                        <Voice />
+                    </div>
+                )}
+            </main>
             <BottomBar activeTab={activeTab} onSelectTab={handleSelectTab}/>
-            {hasLoadedGodot && (
-                <div className={activeTab === "body" ? "block" : "hidden"}>
-                    <Map />
-                </div>
-            )}
-            {hasLoadedTextAI && (
-                <div className={activeTab === "voice" ? "block" : "hidden"}>
-                    <TestComponent />
-                </div>
-            )}
-            {activeTab === "camera" && <p className="align-middle text-red-500">Camera</p>}
-        </>
+        </div>
     );
 }

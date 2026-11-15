@@ -19,7 +19,7 @@ This repository is under active development for the #BuildHybridAI 2026 hackatho
   - Firebase App Check initialized with `ReCaptchaEnterpriseProvider` and local development debug token support.
 
 ### In Progress
-- **Interactive Human Anatomy Map (`src/components/Map.tsx`):** Replacing the current placeholder view with an interactive body map built in Godot for clicking and labeling affected areas to request guidance.
+- **Interactive Human Anatomy Map (`src/components/Body.tsx`):** Replacing the current placeholder view with an interactive body map built in Godot for clicking and labeling affected areas to request guidance.
 - **Voice (STT) & Text Input View:** Implementing speech-to-text and text entry as a standalone method for describing symptoms.
 - **Camera Capture View:** Integrating device camera access as a standalone method for visual symptom/injury assessment.
 - **Hybrid AI Triage Integration:** Connecting each input method to `getHybridModel()` for independent triage responses and caching results in Firestore.
@@ -92,7 +92,7 @@ npm run preview
 │   ├── components/
 │   │   ├── BottomBar.tsx           # Bottom navigation bar
 │   │   ├── BottomBarButtons.tsx    # Reusable navigation button component (in progress)
-│   │   └── Map.tsx                 # Anatomy map view (placeholder, in progress)
+│   │   └── Body.tsx                 # Anatomy map view (placeholder, in progress)
 │   ├── lib/
 │   │   └── firebase.ts     # Firebase App, App Check, Firestore, and Hybrid AI initialization
 │   ├── App.tsx             # Root application component and tab state

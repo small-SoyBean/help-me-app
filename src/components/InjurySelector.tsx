@@ -7,7 +7,7 @@ export default function InjurySelector({ selectedInjury, onSelect }: Props) {
     const injuries = ["Laceration", "Burn", "Sprain"];
 
     return (
-        <div classname="p-6 bg-blue-700 rounded-lg border border-blue-950">
+        <div className="p-6 bg-blue-700 rounded-lg border border-blue-950">
             <h2 className="text-xl font-bold mb-4 text-white">Select Injury Type</h2>
             <div className="flex flex-wrap gap-2">
                 {injuries.map((injury) => (
