@@ -2,6 +2,15 @@ import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { getAI, getGenerativeModel, getLiveGenerativeModel, type AudioConversationController, startAudioConversation, GoogleAIBackend, InferenceMode, ResponseModality } from "firebase/ai";
 import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import {
+    MEDICAL_SYSTEM_INSTRUCTION,
+    type MedicalGuideResponse,
+    type TriagePromptInput,
+    generatePromptText,
+    generateTriageUserPrompt,
+    medicalGuideSchema,
+    parseMedicalGuideResponse,
+} from "./promptGenerator.ts";
 
 // Properly type the debug token on globalThis so TypeScript/ESLint never complain
 declare global {
@@ -51,7 +60,7 @@ export const db = initializeFirestore(app, {
 export const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 // Call this inside your click/triage handler (required by Chrome's on-device Prompt API)
-export function getHybridModel(online: boolean, tts: boolean) {
+export function getHybridModel(online: boolean, tts = false) {
     if (online) {
         if (tts) {
             return getGenerativeModel(ai, {
@@ -66,36 +75,82 @@ export function getHybridModel(online: boolean, tts: boolean) {
                 },
             });
         }
-        return getGenerativeModel(ai, {model: "gemini-4-hydrogen"});
+        return getGenerativeModel(ai, {
+            model: "gemini-4-hydrogen",
+            systemInstruction: MEDICAL_SYSTEM_INSTRUCTION,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: medicalGuideSchema,
+            },
+        });
     }
-    return getGenerativeModel(ai, {model: InferenceMode.PREFER_ON_DEVICE});
+    return getGenerativeModel(ai, {
+        mode: InferenceMode.PREFER_ON_DEVICE,
+        onDeviceParams: {
+            createOptions: {
+                initialPrompts: [
+                    {
+                        role: "system",
+                        content: [{ type: "text", value: MEDICAL_SYSTEM_INSTRUCTION }],
+                    },
+                ],
+            },
+        },
+        inCloudParams: {
+            model: "gemini-4-hydrogen",
+            systemInstruction: MEDICAL_SYSTEM_INSTRUCTION,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: medicalGuideSchema,
+            },
+        },
+    });
 }
 
-//Function to generate a text response
-export async function generateAIResponse(prompt: string, onUpdate: (text: string) => void) {
+// Function to generate a structured medical guide text response
+export async function generateAIResponse(
+    input: string | TriagePromptInput,
+    onUpdate?: (text: string) => void,
+    online = true
+): Promise<string> {
     try {
-        const model = getHybridModel(true, false);
+        const model = getHybridModel(online, false);
 
-        await model.initializeDeviceModel((val) =>
-            console.log(`Download progress: ${Math.round(val*10000) / 100}%`)
-        );
-//Old non-streamed output
-        //const result = await model.generateContent(prompt);
-        //return result.response.text();
+        if (!online) {
+            await model.initializeDeviceModel((val) =>
+                console.log(`Download progress: ${Math.round(val * 10000) / 100}%`)
+            );
+        }
 
-        const result = await model.generateContentStream(prompt);
+        const triageInput: TriagePromptInput =
+            typeof input === "string" ? { userDescription: input } : input;
+        const formattedPrompt = online
+            ? generateTriageUserPrompt(triageInput)
+            : generatePromptText(triageInput);
+
+        const result = await model.generateContentStream(formattedPrompt);
 
         let fullText = "";
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
             fullText += chunkText;
-            onUpdate(fullText)
+            onUpdate?.(fullText);
         }
         return fullText;
     } catch (error) {
         console.error("Error generating response:", error);
         throw error;
     }
+}
+
+// Convenience wrapper that streams raw progress and resolves to the parsed JSON object
+export async function generateMedicalGuide(
+    input: string | TriagePromptInput,
+    onUpdate?: (text: string) => void,
+    online = true
+): Promise<MedicalGuideResponse> {
+    const fullText = await generateAIResponse(input, onUpdate, online);
+    return parseMedicalGuideResponse(fullText);
 }
 
 

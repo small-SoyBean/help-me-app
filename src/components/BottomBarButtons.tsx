@@ -1,17 +1,17 @@
-﻿import { AudioLines, Camera, PersonStanding } from "lucide-react";
-
-export type Tab = "body" | "voice" | "camera";
+﻿import {AudioLines, Camera, PersonStanding, User} from "lucide-react";
+import { type Tabs } from "../App.tsx"
 
 const TABS = {
+    user: { label: "user", Icon: User },
     body: { label: "Body", Icon: PersonStanding },
     voice: { label: "Talk", Icon: AudioLines },
     camera: { label: "Camera", Icon: Camera },
 } as const;
 
 interface Props {
-    activeTab: Tab;
-    onSelectTab: (tab: Tab) => void;
-    thisTab: Tab;
+    activeTab: Tabs;
+    onSelectTab: (tab: Tabs) => void;
+    thisTab: Tabs;
 }
 
 export function BottomBarButtons({ activeTab, onSelectTab, thisTab }: Props) {

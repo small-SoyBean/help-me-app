@@ -1,17 +1,17 @@
-﻿import { AudioLines, Camera, PersonStanding } from "lucide-react";
-
-export type Tab = "body" | "voice" | "camera";
+﻿import {User, PersonStanding, AudioLines, Camera} from "lucide-react";
+import { type Tabs } from "../App.tsx"
 
 const TABS = {
+    user: { label: "user", Icon: User },
     body: { label: "Body", Icon: PersonStanding },
     voice: { label: "Talk", Icon: AudioLines },
     camera: { label: "Camera", Icon: Camera },
 } as const;
 
 interface Props {
-    activeTab: Tab;
-    onSelectTab: (tab: Tab) => void;
-    thisTab: Tab;
+    activeTab: Tabs;
+    onSelectTab: (tab: Tabs) => void;
+    thisTab: Tabs;
 }
 
 export function TopBarButtons({ activeTab, onSelectTab, thisTab }: Props) {
@@ -19,7 +19,6 @@ export function TopBarButtons({ activeTab, onSelectTab, thisTab }: Props) {
     const isActive = activeTab === thisTab;
 
     return (
-
         <button
             onClick={() => onSelectTab(thisTab)}
             className={`rounded-lg px-4 py-2 flex items-center gap-2 border-2 text-lg ${

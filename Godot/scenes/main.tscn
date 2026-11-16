@@ -29,27 +29,31 @@ color = Color(0.8273134, 0.8848549, 0.95448464, 1)
 
 [node name="Label" type="Label" parent="." unique_id=1788597490]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.5
-offset_top = -11.5
-offset_right = 33.5
-offset_bottom = 11.5
+offset_left = -35.5
+offset_right = 35.5
+offset_bottom = 23.0
 grow_horizontal = 2
-grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "peekabo."
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="body_map" type="Control" parent="." unique_id=606171947]
-anchors_preset = 0
-offset_left = 200.0
-offset_top = -4.0
-offset_right = 414.0
-offset_bottom = 331.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.0
+offset_top = -167.5
+offset_right = 107.0
+offset_bottom = 167.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_tipki")
 
 [node name="head_crop" type="TextureButton" parent="body_map" unique_id=1169138861]
