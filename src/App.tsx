@@ -1,6 +1,7 @@
 import {BottomBar} from './components/BottomBar.tsx'
 import Body from './components/Body'
 import Voice from './components/Voice'
+import Camera from './components/Camera'
 import {useState} from 'react';
 import {TopBar} from "./components/TopBar.tsx";
 import {UserInfo} from "./components/UserInfo.tsx";
@@ -39,6 +40,9 @@ export function App() {
                 )}
                 <div className={activeTab === "user" ? "h-full block" : "hidden"}>
                     <UserInfo />
+                </div>
+                <div className={activeTab === "camera" ? "h-full block" : "hidden"}>
+                    <Camera />
                 </div>
             </main>
             <BottomBar activeTab={activeTab} onSelectTab={handleSelectTab}/>

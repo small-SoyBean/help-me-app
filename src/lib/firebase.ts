@@ -12,6 +12,11 @@ import {
     parseMedicalGuideResponse,
 } from "./promptGenerator.ts";
 
+//Returns boolean depending on if the device has a network connection or not
+export function checkIsOnline(): boolean {
+    return typeof navigator !== "undefined" ? navigator.onLine : true;
+}
+
 // Properly type the debug token on globalThis so TypeScript/ESLint never complain
 declare global {
     interface Window {
@@ -107,11 +112,32 @@ export function getHybridModel(online: boolean, tts = false) {
     });
 }
 
+//Helper function for converting photo to usable AI part
+async function fileToGenerativePart(file: File | Blob) {
+    const base64EncodedDataPromise = new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const result = reader.result as string;
+            resolve(result.split(',')[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+
+    return {
+        type: "inlineData",
+        inlineData: {
+            data: await base64EncodedDataPromise,
+            mimeType: file.type
+        },
+    };
+}
+
 // Function to generate a structured medical guide text response
 export async function generateAIResponse(
     input: string | TriagePromptInput,
     onUpdate?: (text: string) => void,
-    online = true
+    online = checkIsOnline()
 ): Promise<string> {
     try {
         const model = getHybridModel(online, false);
@@ -150,6 +176,56 @@ export async function generateMedicalGuide(
     online = true
 ): Promise<MedicalGuideResponse> {
     const fullText = await generateAIResponse(input, onUpdate, online);
+    return parseMedicalGuideResponse(fullText);
+}
+
+//Function to generate structured response given an image
+export async function generateAIResponseFromImage(
+    imageFile: File | Blob,
+    onUpdate?: (text: string) => void,
+    online: boolean = checkIsOnline()
+): Promise<string> {
+    try {
+        const model = getHybridModel(online, false);
+
+        if (!online) {
+            await model.initializeDeviceModel((val) =>
+                console.log(`Download progress: ${Math.round(val * 10000) / 100}%`)
+            );
+        }
+
+        const defaultInput: TriagePromptInput = {
+            userDescription: "Please analyze the attached image and provide a triage assessment."
+        };
+
+        const formattedPrompt = online
+            ? generateTriageUserPrompt(defaultInput)
+            : generatePromptText(defaultInput);
+
+        const imagePart = await fileToGenerativePart(imageFile);
+
+        const result = await model.generateContentStream([formattedPrompt, imagePart as any]);
+
+        let fullText = "";
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            fullText += chunkText;
+            onUpdate?.(fullText);
+        }
+        return fullText;
+    } catch (error) {
+        console.error("Error generating multimodal response:", error);
+        throw error;
+    }
+}
+
+// Wrapper for converting image response to JSON
+export async function generateMedicalGuideFromImage(
+    imageFile: File | Blob,
+    onUpdate?: (text: string) => void,
+    online: boolean = checkIsOnline()
+): Promise<MedicalGuideResponse> {
+    const fullText = await generateAIResponseFromImage(imageFile, onUpdate, online);
     return parseMedicalGuideResponse(fullText);
 }
 
