@@ -39,7 +39,6 @@ This repository is under active development for the #BuildHybridAI 2026 hackatho
 
 ### Prerequisites
 - **Node.js** (v20+ recommended) and **npm**
-- **Godot v4.7.2**
 - A **Firebase project** with Firebase AI Logic, Firestore, and App Check enabled
 - For on-device inference: a supported desktop browser with Chrome's Built-in AI (Prompt API / Gemini Nano) enabled; otherwise, Firebase AI automatically falls back to cloud inference.
 
@@ -63,18 +62,14 @@ VITE_FIREBASE_APP_ID=your_app_id
 VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 VITE_RECAPTCHA_SITE_KEY=your_recaptcha_enterprise_site_key
 ```
-### 3. Export the Godot Project
-Open the Godot project in ```Godot/``` with **Godot 4.7.2** and export the project.
 
-```Project -> Export -> Export Project (Uncheck 'Export With Debug')```
-
-### 4. Run the Development Server
+### 3. Run the Development Server
 
 ```bash
 npm run dev
 ```
 
-### 5. Build for Production
+### 4. Build for Production
 
 ```bash
 npm run build
