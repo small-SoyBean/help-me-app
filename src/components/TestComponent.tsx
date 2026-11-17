@@ -48,7 +48,7 @@ export default function PromptTest() {
             <button
                 onClick={handleTest}
                 disabled={loading}
-                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+                className="px-4 py-2 bg-blue-600 text-white rounded"
             >
                 {loading ? "Generating..." : "Send Prompt"}
             </button>
@@ -56,7 +56,7 @@ export default function PromptTest() {
             <button
                 onClick={() => speakText(response)}
                 disabled={loading}
-                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+                className="px-4 py-2 bg-blue-600 text-white rounded"
             >
                 Speak
             </button>
@@ -64,7 +64,7 @@ export default function PromptTest() {
             <button
                 onClick={() => talkToMe()}
                 disabled={loading}
-                className="rounded-sm text-slate-900 bg-red-500 border-2 border-gray-900 px-4 py-1 font-bold shadow-2xs shadow-green-400"
+                className="px-4 py-2 bg-blue-600 text-white rounded"
             >
                 Talk To Me (Live voice)
             </button>

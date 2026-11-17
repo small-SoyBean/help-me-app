@@ -206,7 +206,7 @@ export default function Camera() {
                     <button
                         onClick={handleTakeAndSendPhoto}
                         disabled={loading}
-                        className={`rounded-sm text-center text-slate-900 bg-blue-500 border-2 border-gray-900 px-4 py-2 font-bold shadow-2xs shadow-blue-400 ${loading ? "opacity-50 pointer-events-none" : ""}`}
+                        className={`px-4 py-2 bg-blue-600 text-white rounded ${loading ? "opacity-50 pointer-events-none" : ""}`}
                     >
                         {loading ? "Analyzing..." : "Take a Photo"}
                     </button>
@@ -214,7 +214,7 @@ export default function Camera() {
                     <button
                         onClick={handleResumeCamera}
                         disabled={loading}
-                        className="rounded-sm text-center text-slate-900 bg-green-500 border-2 border-gray-900 px-4 py-2 font-bold shadow-2xs shadow-green-400"
+                        className="rounded-sm text-center text-white  bg-blue-900 border-2 "
                     >
                         Resume Camera
                     </button>
@@ -224,7 +224,7 @@ export default function Camera() {
                     <button
                         onClick={handleSwapCamera}
                         disabled={loading}
-                        className="rounded-sm text-center text-slate-900 bg-gray-300 border-2 border-gray-900 px-4 py-2 font-bold shadow-2xs shadow-gray-400"
+                        className="px-4 py-2 bg-blue-600 text-white rounded"
                     >
                         Swap Camera
                     </button>
